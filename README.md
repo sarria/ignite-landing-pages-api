@@ -1,36 +1,22 @@
 # Document Generator
 
-This project provides an API endpoint at `/page/api/pdf.ts` for generating PDFs from URLs. The service accepts a URL and a specified PDF format, then returns the generated PDF.
-
--   [Document Generator](#document-generator)
-    -   [Usage](#usage)
-        -   [Making a Request](#making-a-request)
-        -   [Authentication](#authentication)
-    -   [🚀 Project Structure](#-project-structure)
-    -   [🧞 Commands](#-commands)
-    -   [👀 References](#-references)
+This project provides an API endpoint at `/page/api/scrape.ts` for scraping a website and get its metadata, images and colors.
 
 ## Usage
 
 ### Making a Request
 
-To generate a PDF, send a POST request to /page/api/pdf.ts with a JSON payload matching the following format:
-
-| Key    | Value                                                                                                     | Description                                                                     |
-| :----- | :-------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| `url`  | string                                                                                                    | Page to get pdf from.                                                           |
-| `size` | `"letter" \| "legal" \| "tabloid" \| "ledger" \| "a0" \| "a1" \| "a2" \| "a3" \| "a4" \| "a5" \| "a6" \|` | **[PaperFormat type \| Puppeteer](https://pptr.dev/api/puppeteer.paperformat)** |
+Send a POST request to /page/api/scrape.ts with a JSON payload matching the following format:
 
 Example request:
 
 ```json
 {
     "url": "https://example.com",
-    "size": "a4" // Replace with desired PDF format
 }
 ```
 
-This will return a **base64 encoded string** containing the requested PDF.
+This will return an JSON object with the scraped data.
 
 ### Authentication
 
@@ -39,25 +25,6 @@ This API uses API keys for authentication. Include your application's API key in
 ```
 X-Api-Key: <your-api-key>
 ```
-
-## 🚀 Project Structure
-
-Inside of this 🧑‍🚀Astro project, you'll see the following folders and files:
-
-```text
-/
-├── src/
-│   ├── services/
-│   │   └── *
-│   ├── utils/
-│   │   └── *
-│   └── pages/
-│       └── pdf/
-|         └── api.ts
-└── package.json
-```
-
-Each page is exposed as a route based on its file name.
 
 ## 🧞 Commands
 
