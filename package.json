@@ -1,0 +1,26 @@
+{
+    "name": "@townsquare-interactive/ignite-landing-pages-api",
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro check && astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "test": "vitest run",
+        "test:watch": "vitest watch"
+    },
+    "dependencies": {
+        "@astrojs/check": "^0.3.1",
+        "@astrojs/vercel": "^6.1.4",
+        "@sparticuz/chromium-min": "^116.0.0",
+        "astro": "^4.1.3",
+        "puppeteer-core": "^21.0.2",
+        "typescript": "^5.3.3",
+        "zod": "^3.20.2"
+    },
+    "devDependencies": {
+        "vitest": "^1.2.1"
+    }
+}
