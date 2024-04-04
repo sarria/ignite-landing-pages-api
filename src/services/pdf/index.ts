@@ -1,6 +1,7 @@
 import chromium from '@sparticuz/chromium-min'
-import puppeteer from 'puppeteer-core'
+import puppeteer, { type PaperFormat } from 'puppeteer-core'
 
+export const pdfFormats = ['letter', 'legal', 'tabloid', 'ledger', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6'] as const
 
 const getBrowserOptions = async () => {
     return import.meta.env.AWS_REGION
@@ -14,8 +15,7 @@ const getBrowserOptions = async () => {
               args: chromium.args,
               executablePath:
                   process.platform === 'win32'
-                    //   ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
-                      ? 'C:\\Users\\jauns\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe'
+                      ? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
                       : process.platform === 'linux'
                       ? '/usr/bin/google-chrome'
                       : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -23,30 +23,17 @@ const getBrowserOptions = async () => {
           }
 }
 
-export const getScrapeUrl = async (url: string) => {
+export const getPdfFromUrl = async (url: string, size: PaperFormat) => {
     const browserOptions = await getBrowserOptions()
     const browser = await puppeteer.launch(browserOptions)
     const page = await browser.newPage()
     await page.goto(url, { waitUntil: 'networkidle0' })
+    const pdf = await page.pdf({
+        format: size,
+        printBackground: true,
+        landscape: true,
+    })
 
-    const title = await page.title();
-
-    const metaTags = await page.evaluate(() => {
-        const tags = Array.from(document.getElementsByTagName('meta'));
-        return tags.map(tag => {
-            return {
-              name: tag.getAttribute('name') || tag.getAttribute('property') || null,
-              content: tag.getAttribute('content'),
-            };
-        })
-        .filter(tag => tag.name); // Filter out tags without name and property
-    });	
-
-    await browser.close();    
-
-    return {
-        url,
-        title,
-        metaTags
-    };
+    // await browser.close()
+    return pdf
 }
